@@ -1,7 +1,7 @@
 "use client"
 
 import { RiCloseLine, RiFilter3Line } from "@remixicon/react"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Drawer, DrawerContent } from "@/components/ui/drawer"
@@ -30,10 +30,12 @@ function VenueListToolbar({ total }: { total: number }) {
 function SidebarFilters({
   venueCount,
   upcomingNearbyCount,
+  deadlinesReady,
   filterPanelProps,
 }: {
   venueCount: number
   upcomingNearbyCount: number
+  deadlinesReady: boolean
   filterPanelProps: React.ComponentProps<typeof VenueFiltersPanel>
 }) {
   return (
@@ -42,6 +44,7 @@ function SidebarFilters({
         className="pb-4"
         venueCount={venueCount}
         upcomingNearbyCount={upcomingNearbyCount}
+        deadlinesReady={deadlinesReady}
       />
       <VenueFiltersPanel className="pb-4" {...filterPanelProps} />
       <VenuesSidebarFooter />
@@ -51,6 +54,11 @@ function SidebarFilters({
 
 export function VenuesDashboard() {
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [deadlinesReady, setDeadlinesReady] = useState(false)
+
+  useEffect(() => {
+    setDeadlinesReady(true)
+  }, [])
   const {
     filters: { search, category, publisher, core, scopus },
     searchInput,
@@ -84,12 +92,16 @@ export function VenuesDashboard() {
           v.categories.some((c: VenueCategory) => c.toLowerCase().includes(q))
         )
       })
-      .sort(compareVenues)
-  }, [search, category, publisher, core, scopus])
+      .sort(
+        deadlinesReady
+          ? compareVenues
+          : (a, b) => a.acronym.localeCompare(b.acronym),
+      )
+  }, [search, category, publisher, core, scopus, deadlinesReady])
 
   const upcomingNearbyCount = useMemo(
-    () => countVenuesWithDeadlineNearby(venues),
-    []
+    () => (deadlinesReady ? countVenuesWithDeadlineNearby(venues) : 0),
+    [deadlinesReady],
   )
 
   const filterPanelProps = {
@@ -112,6 +124,7 @@ export function VenuesDashboard() {
     <SidebarFilters
       venueCount={venues.length}
       upcomingNearbyCount={upcomingNearbyCount}
+      deadlinesReady={deadlinesReady}
       filterPanelProps={filterPanelProps}
     />
   )
@@ -131,6 +144,7 @@ export function VenuesDashboard() {
                 className="min-w-0 flex-1"
                 venueCount={venues.length}
                 upcomingNearbyCount={upcomingNearbyCount}
+                deadlinesReady={deadlinesReady}
                 compact
               />
               {filtersOpen && (

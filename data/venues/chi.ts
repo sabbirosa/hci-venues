@@ -33,7 +33,7 @@ export const venue: Venue = {
       endDate: "2027-05-14",
       location: "Pittsburgh, PA, USA",
       announced: true,
-      abstractDeadline: "2026-09-10",
+      paperDeadline: "2026-09-10",
       website: "https://chi2027.acm.org",
     },
   ],

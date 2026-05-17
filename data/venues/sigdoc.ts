@@ -7,15 +7,13 @@ import type { Venue } from "@/lib/venues/types"
 export const venue: Venue = {
   id: "sigdoc",
   acronym: "SIGDOC",
-  fullName: "ACM SIGDOC Conference (Special Interest Group on Design of Communication)",
+  fullName:
+    "ACM SIGDOC Conference (Special Interest Group on Design of Communication)",
   publisher: "ACM",
-  categories: [
-    "Communication",
-    "Design"
-  ],
+  categories: ["Communication", "Design"],
   coreRank: "B",
   scopusIndexed: true,
-  website: "https://sigdoc.acm.org/",
+  website: "https://sigdoc.acm.org",
   editions: [
     {
       year: 2026,
@@ -23,7 +21,9 @@ export const venue: Venue = {
       endDate: "2026-10-24",
       location: "St. Paul, MN, USA",
       announced: true,
-      abstractDeadline: "2026-07-01",
-    }
+      abstractDeadline: "2026-01-16",
+      paperDeadline: "2026-03-30",
+      website: "https://sigdoc.acm.org/conference/2026",
+    },
   ],
 }

@@ -6,7 +6,6 @@ import { venue as aies } from "./aies"
 import { venue as asonam } from "./asonam"
 import { venue as bcs_hci } from "./bcs-hci"
 import { venue as chi } from "./chi"
-import { venue as chi_ea } from "./chi-ea"
 import { venue as chi_play } from "./chi-play"
 import { venue as citsm } from "./citsm"
 import { venue as compass } from "./compass"
@@ -40,7 +39,6 @@ const allVenues: Venue[] = [
   citsm,
   ieee_vrw,
   chi,
-  chi_ea,
   cscw,
   dis,
   nordichi,

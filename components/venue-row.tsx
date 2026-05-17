@@ -10,7 +10,10 @@ import { ScopusBadge } from "@/components/scopus-badge"
 import { cn } from "@/lib/utils"
 import { formatDateRange, formatShortDate } from "@/lib/venues/dates"
 import { getVenueOfficialSiteHref } from "@/lib/venues/edition-links"
-import { getNextEdition } from "@/lib/venues/get-next-edition"
+import {
+  getNextEdition,
+  submissionDeadlineHeading,
+} from "@/lib/venues/get-next-edition"
 import type { Venue } from "@/lib/venues/types"
 
 function Tag({
@@ -102,19 +105,16 @@ export function VenueRow({ venue }: { venue: Venue }) {
           <>
             <div>
               <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-                Submission deadline
+                {next.status === "upcoming"
+                  ? submissionDeadlineHeading(next.countdownKind)
+                  : "Submission deadline"}
               </p>
               {next.status === "upcoming" && (
                 <>
                   <p className="font-medium">
                     {formatShortDate(next.countdownDate)}
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    {next.label} ·{" "}
-                    {next.countdownKind === "abstract"
-                      ? "abstract due"
-                      : "paper due"}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{next.label}</p>
                   <Countdown compact targetDate={next.countdownDate} />
                 </>
               )}

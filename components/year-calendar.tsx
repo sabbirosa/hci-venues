@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react"
 
 import { Button } from "@/components/ui/button"
@@ -49,7 +49,7 @@ function MonthGrid({
   year: number
   month: number
   markers: CalendarMarker[]
-  today: string
+  today: string | null
 }) {
   const firstDow = new Date(year, month, 1).getDay()
   const daysInMonth = new Date(year, month + 1, 0).getDate()
@@ -73,7 +73,7 @@ function MonthGrid({
           }
           const iso = toIso(year, month, day)
           const dayMarkers = markersOnDay(markers, iso)
-          const isToday = iso === today
+          const isToday = today !== null && iso === today
 
           return (
             <div
@@ -153,7 +153,11 @@ export function YearCalendar({
     () => buildCalendarMarkers(venues, year),
     [venues, year],
   )
-  const today = todayIso()
+  const [today, setToday] = useState<string | null>(null)
+
+  useEffect(() => {
+    setToday(todayIso())
+  }, [])
 
   const windowYears = useMemo(() => {
     const ys: number[] = []

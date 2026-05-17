@@ -34,6 +34,10 @@ export function countVenuesWithDeadlineNearby(
   return venues.filter((v) => hasUpcomingDeadlineNearby(v, now, withinDays)).length
 }
 
+/**
+ * Which deadline the venue list shows: abstract first if present, otherwise paper.
+ * Editions may have one or both in data; only one drives the home-page countdown.
+ */
 export function getSubmissionDeadline(
   edition: ConferenceEdition,
 ): { date: string; kind: "abstract" | "paper" } | null {
@@ -44,6 +48,12 @@ export function getSubmissionDeadline(
     return { date: edition.paperDeadline, kind: "paper" }
   }
   return null
+}
+
+export function submissionDeadlineHeading(
+  kind: "abstract" | "paper",
+): string {
+  return kind === "abstract" ? "Abstract deadline" : "Paper deadline"
 }
 
 export function getNextEdition(

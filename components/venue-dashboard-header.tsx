@@ -6,11 +6,14 @@ import { NEARBY_DEADLINE_DAYS } from "@/lib/venues/dates"
 export function VenueDashboardHeader({
   venueCount,
   upcomingNearbyCount,
+  deadlinesReady = true,
   compact = false,
   className,
 }: {
   venueCount: number
   upcomingNearbyCount: number
+  /** False until client-only deadline math has run (avoids SSR mismatch). */
+  deadlinesReady?: boolean
   compact?: boolean
   className?: string
 }) {
@@ -28,11 +31,18 @@ export function VenueDashboardHeader({
       <p
         className={cn(
           "text-muted-foreground text-primary",
-          compact && "text-sm"
+          compact && "text-sm",
         )}
+        suppressHydrationWarning
       >
-        {venueCount} venues and {upcomingNearbyCount} with upcoming deadlines in
-        the next {NEARBY_DEADLINE_DAYS} days
+        {venueCount} venues
+        {deadlinesReady ? (
+          <>
+            {" "}
+            and {upcomingNearbyCount} with upcoming deadlines in the next{" "}
+            {NEARBY_DEADLINE_DAYS} days
+          </>
+        ) : null}
       </p>
     </header>
   )

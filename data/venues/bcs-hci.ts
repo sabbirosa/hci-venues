@@ -9,12 +9,10 @@ export const venue: Venue = {
   acronym: "BCS-HCI",
   fullName: "BCS Conference on Human-Computer Interaction (BritCHI)",
   publisher: "BCS",
-  categories: [
-    "HCI"
-  ],
+  categories: ["HCI"],
   coreRank: "Regional",
   scopusIndexed: true,
-  website: "https://www.britchi.uk/",
+  website: "https://www.britchi.uk",
   editions: [
     {
       year: 2026,
@@ -22,7 +20,8 @@ export const venue: Venue = {
       endDate: "2026-11-03",
       location: "London, UK",
       announced: true,
-      abstractDeadline: "2026-06-12",
-    }
+      paperDeadline: "2026-05-21",
+      website: "https://www.britchi.uk",
+    },
   ],
 }

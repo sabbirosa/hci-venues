@@ -29,6 +29,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "light antialiased",
         fontMono.variable,
@@ -36,7 +37,10 @@ export default function RootLayout({
         sourceSans3.variable,
       )}
     >
-      <body className="bg-background text-foreground">
+      <body
+        suppressHydrationWarning
+        className="bg-background text-foreground"
+      >
         <TooltipProvider>
           <SiteContainer>{children}</SiteContainer>
         </TooltipProvider>
