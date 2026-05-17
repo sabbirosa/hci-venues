@@ -23,6 +23,10 @@ export const venue: Venue = {
       location: "Barcelona, Spain",
       announced: true,
       abstractDeadline: "2025-09-11",
+      website: "https://chi2026.acm.org/",
+      programLink: "https://programs.sigchi.org/chi/2026",
+      proceedingsLink:
+        "https://dl.acm.org/doi/proceedings/10.1145/3772318",
     },
     {
       year: 2027,

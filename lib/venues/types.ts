@@ -53,10 +53,15 @@ export interface ConferenceEdition {
   timezone?: string
   dateLabel?: string
   note?: string
-  papersLink?: string
+  /** This year's conference site (e.g. https://chi2026.acm.org/). */
+  website?: string
+  /** Session / schedule program (e.g. https://programs.sigchi.org/chi/2026). */
+  programLink?: string
+  /** Published proceedings (e.g. ACM Digital Library DOI collection). */
+  proceedingsLink?: string
+  /** Papers With Code collection (optional). */
   pwcLink?: string
   hindex?: number
-  website?: string
   announced: boolean
 }
 
@@ -76,6 +81,7 @@ export interface Venue {
    * months away. Not shown in the UI.
    */
   featured?: boolean
+  /** Permanent series site (e.g. https://chi.acm.org/). */
   website?: string
   subject?: ConfDatabaseSubject
   editions?: ConferenceEdition[]

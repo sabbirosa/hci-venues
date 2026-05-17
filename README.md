@@ -29,7 +29,7 @@ For the home-page countdown, the app uses the nearest upcoming edition, then **`
 | `categories` | Topic tags (HCI, UI/UX, CSCW & Social, etc.) |
 | `coreRank` | CORE rank: A*, A, B, C, Regional, Unranked, or none |
 | `scopusIndexed` | Whether the venue is treated as Scopus-indexed in this tracker |
-| `website` | Official conference site (optional) |
+| `website` | Permanent series site (e.g. https://chi.acm.org/) |
 | `featured` | Internal sort flag for flagship venues; only affects order when a deadline is within 30 days |
 | `notes` | Maintainer notes (optional; not shown on the main card) |
 | `editions` | List of per-year records (see below) |
@@ -45,7 +45,10 @@ For the home-page countdown, the app uses the nearest upcoming edition, then **`
 | `abstractDeadline` | Abstract submission due date—used for the countdown when set |
 | `paperDeadline` | Full-paper due date—used for the countdown if there is no abstract deadline |
 | `announced` | `true` when dates are official; `false` for placeholders or TBA |
-| `editionId`, `timezone`, `dateLabel`, `note`, `papersLink`, `pwcLink`, `hindex`, `website` | Optional extra metadata |
+| `website` | This year's conference site (e.g. https://chi2026.acm.org/) |
+| `programLink` | Session / schedule program (e.g. https://programs.sigchi.org/chi/2026) |
+| `proceedingsLink` | Published proceedings (e.g. ACM Digital Library) |
+| `editionId`, `timezone`, `dateLabel`, `note`, `pwcLink`, `hindex` | Optional extra metadata |
 
 Do not guess deadlines. Use the official CFP or conference site, or leave deadlines out until they are published.
 
