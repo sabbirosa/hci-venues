@@ -1,30 +1,27 @@
 import type { Venue } from "@/lib/venues/types"
 
-/**
- * UbiComp — update main-track abstractDeadline per edition (YYYY-MM-DD).
- * Placeholder deadlines marked 2026-12-31 are DUMMY; replace from the official CFP.
- */
+/** UbiComp / ISWC 2026 — IMWUT submission deadline for conference presentation. */
 export const venue: Venue = {
   id: "ubicomp",
   acronym: "UbiComp",
-  fullName: "ACM International Joint Conference on Pervasive and Ubiquitous Computing",
+  fullName:
+    "ACM International Joint Conference on Pervasive and Ubiquitous Computing (UbiComp / ISWC)",
   publisher: "ACM",
-  categories: [
-    "Mobile & Ubiquitous",
-    "HCI"
-  ],
+  categories: ["Mobile & Ubiquitous", "HCI"],
   coreRank: "A",
   scopusIndexed: true,
   website: "https://ubicomp.org/",
+  notes: "Full papers via IMWUT (PACM) for presentation at UbiComp / ISWC.",
   editions: [
     {
       year: 2026,
-      startDate: "2026-10-11",
+      startDate: "2026-10-13",
       endDate: "2026-10-15",
       location: "Shanghai, China",
       announced: true,
-      abstractDeadline: "2026-05-01",
-    }
+      paperDeadline: "2026-08-02",
+      timezone: "AoE",
+      website: "https://ubicomp.org/ubicomp2026",
+    },
   ],
-  notes: "Often co-located with ISWC; papers in IMWUT / PACM.",
 }

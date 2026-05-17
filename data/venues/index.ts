@@ -21,6 +21,8 @@ import { venue as icwsm } from "./icwsm"
 import { venue as idc } from "./idc"
 import { venue as ieee_vrw } from "./ieee-vrw"
 import { venue as imx } from "./imx"
+import { venue as iss } from "./iss"
+import { venue as iui } from "./iui"
 import { venue as mobisys } from "./mobisys"
 import { venue as muc } from "./muc"
 import { venue as nordichi } from "./nordichi"
@@ -29,9 +31,11 @@ import { venue as sigdoc } from "./sigdoc"
 import { venue as siggraph } from "./siggraph"
 import { venue as smsociety } from "./smsociety"
 import { venue as soups } from "./soups"
+import { venue as sui } from "./sui"
 import { venue as tei } from "./tei"
 import { venue as ubicomp } from "./ubicomp"
 import { venue as uist } from "./uist"
+import { venue as vrst } from "./vrst"
 import { venue as www } from "./www"
 
 const allVenues: Venue[] = [
@@ -64,9 +68,13 @@ const allVenues: Venue[] = [
   cui,
   ictd,
   soups,
+  sui,
   www,
   icwsm,
   bcs_hci,
+  iss,
+  iui,
+  vrst,
 ]
 
 export const venues: Venue[] = sortVenues(allVenues)
