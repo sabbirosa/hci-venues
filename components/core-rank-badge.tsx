@@ -3,6 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { coreRankBadgeStyles } from "@/lib/venues/core-rank-styles"
 import type { CoreRank } from "@/lib/venues/types"
 import { cn } from "@/lib/utils"
 
@@ -27,14 +28,18 @@ export function CoreRankBadge({
       <TooltipTrigger asChild>
         <span
           className={cn(
-            "bg-muted text-muted-foreground inline-block cursor-default px-1.5 py-0.5 text-xs font-semibold uppercase tracking-widest",
+            "inline-block cursor-default px-1.5 py-0.5 text-xs font-semibold tracking-widest uppercase",
+            coreRankBadgeStyles[rank],
             className,
           )}
         >
           CORE {rank}
         </span>
       </TooltipTrigger>
-      <TooltipContent side="top" className="max-w-xs text-sm">
+      <TooltipContent
+        side="top"
+        className="flex w-64 max-w-64 flex-col items-start p-3 text-sm leading-snug"
+      >
         {rankDescriptions[rank]}
       </TooltipContent>
     </Tooltip>

@@ -1,6 +1,7 @@
 "use client"
 
 import { CoreRankBadge } from "@/components/core-rank-badge"
+import { ScopusBadge } from "@/components/scopus-badge"
 import { Countdown } from "@/components/countdown"
 import { cn } from "@/lib/utils"
 import { formatDateRange, formatShortDate } from "@/lib/venues/dates"
@@ -35,7 +36,7 @@ export function VenueRow({ venue }: { venue: Venue }) {
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="text-base font-medium">{venue.acronym}</h2>
           {venue.coreRank && <CoreRankBadge rank={venue.coreRank} />}
-          {venue.scopusIndexed && <Tag>Scopus</Tag>}
+          {venue.scopusIndexed && <ScopusBadge />}
         </div>
         <p className="text-sm text-muted-foreground">
           <span className="font-medium text-foreground">Publisher:</span>{" "}

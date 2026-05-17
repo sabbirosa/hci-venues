@@ -39,10 +39,15 @@ const coreOptions: FilterOption[] = [
   ...coreRanks.map((r) => ({ value: r, label: `CORE ${r}` })),
 ]
 const categoryOptions = withAllOption(allCategories, "All topics")
+const scopusOptions: FilterOption[] = [
+  { value: "all", label: "All" },
+  { value: "yes", label: "Indexed" },
+  { value: "no", label: "Not indexed" },
+]
 
 export function VenuesDashboard() {
   const {
-    filters: { search, category, publisher, core },
+    filters: { search, category, publisher, core, scopus },
     searchInput,
     activeFilterCount,
     hasActiveFilters,
@@ -50,6 +55,7 @@ export function VenuesDashboard() {
     setCategory,
     setPublisher,
     setCore,
+    setScopus,
     clearFilters,
   } = useVenueFilters()
 
@@ -64,6 +70,8 @@ export function VenuesDashboard() {
           !v.categories.includes(category as VenueCategory)
         )
           return false
+        if (scopus === "yes" && !v.scopusIndexed) return false
+        if (scopus === "no" && v.scopusIndexed) return false
         if (!q) return true
         return (
           v.acronym.toLowerCase().includes(q) ||
@@ -72,7 +80,7 @@ export function VenuesDashboard() {
         )
       })
       .sort(compareVenues)
-  }, [search, category, publisher, core])
+  }, [search, category, publisher, core, scopus])
 
   const upcomingNearbyCount = useMemo(
     () => countVenuesWithDeadlineNearby(venues),
@@ -146,6 +154,13 @@ export function VenuesDashboard() {
                     value={category}
                     onValueChange={setCategory}
                     options={categoryOptions}
+                  />
+
+                  <FilterField
+                    label="Scopus indexed"
+                    value={scopus}
+                    onValueChange={setScopus}
+                    options={scopusOptions}
                   />
 
                   {hasActiveFilters && (

@@ -8,18 +8,23 @@ import type { CoreRank } from "@/lib/venues/types"
 
 const coreRanks: CoreRank[] = ["A*", "A", "B", "C", "Regional", "Unranked"]
 const VALID_CORE = ["all", ...coreRanks] as const
+const VALID_SCOPUS = ["all", "yes", "no"] as const
+
+export type ScopusFilter = (typeof VALID_SCOPUS)[number]
 
 export interface VenueFilters {
   search: string
   publisher: string
   core: string
   category: string
+  scopus: ScopusFilter
 }
 
 function readFilters(params: URLSearchParams): VenueFilters {
   const publisher = params.get("publisher") ?? "all"
   const core = params.get("core") ?? "all"
   const category = params.get("topic") ?? "all"
+  const scopus = params.get("scopus") ?? "all"
 
   return {
     search: params.get("q") ?? "",
@@ -34,6 +39,9 @@ function readFilters(params: URLSearchParams): VenueFilters {
       (allCategories as readonly string[]).includes(category)
         ? category
         : "all",
+    scopus: VALID_SCOPUS.includes(scopus as ScopusFilter)
+      ? (scopus as ScopusFilter)
+      : "all",
   }
 }
 
@@ -53,6 +61,7 @@ function writeFilters(
   if ("publisher" in patch) apply("publisher", patch.publisher)
   if ("core" in patch) apply("core", patch.core)
   if ("category" in patch) apply("topic", patch.category)
+  if ("scopus" in patch) apply("scopus", patch.scopus)
 
   return next
 }
@@ -112,6 +121,15 @@ export function useVenueFilters() {
     (value: string) => replaceParams({ category: value }),
     [replaceParams],
   )
+  const setScopus = useCallback(
+    (value: string) =>
+      replaceParams({
+        scopus: VALID_SCOPUS.includes(value as ScopusFilter)
+          ? (value as ScopusFilter)
+          : "all",
+      }),
+    [replaceParams],
+  )
 
   const activeFilterCount = useMemo(() => {
     let count = 0
@@ -119,6 +137,7 @@ export function useVenueFilters() {
     if (filters.publisher !== "all") count++
     if (filters.core !== "all") count++
     if (filters.category !== "all") count++
+    if (filters.scopus !== "all") count++
     return count
   }, [filters])
 
@@ -139,6 +158,7 @@ export function useVenueFilters() {
     setPublisher,
     setCore,
     setCategory,
+    setScopus,
     clearFilters,
   }
 }
