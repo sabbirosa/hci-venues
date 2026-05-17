@@ -11,7 +11,11 @@ export const venue: Venue = {
   publisher: "IEEE",
   categories: [
     "IT & Service Management",
-    "Systems"
+    "Systems",
+    "Security & Privacy",
+    "HCI",
+    "AI & Ethics",
+    "Communication",
   ],
   coreRank: "Unranked",
   scopusIndexed: true,

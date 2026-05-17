@@ -11,7 +11,13 @@ export const venue: Venue = {
   publisher: "ACM",
   categories: [
     "Games & Play",
-    "HCI"
+    "HCI",
+    "UI/UX",
+    "Engagement & Gamification",
+    "VR/AR/XR",
+    "Design",
+    "Children",
+    "CSCW & Social",
   ],
   coreRank: "B",
   scopusIndexed: true,

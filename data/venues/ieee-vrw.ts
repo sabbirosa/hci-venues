@@ -10,7 +10,13 @@ export const venue: Venue = {
   fullName: "IEEE Conference on Virtual Reality and 3D User Interfaces — Abstracts & Workshops",
   publisher: "IEEE",
   categories: [
-    "VR/AR/XR"
+    "VR/AR/XR",
+    "HCI",
+    "UI/UX",
+    "Multimodal Interfaces",
+    "Graphics",
+    "Systems",
+    "Emerging Technologies",
   ],
   coreRank: "A*",
   scopusIndexed: true,

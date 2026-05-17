@@ -7,7 +7,16 @@ export const venue: Venue = {
   fullName:
     "ACM International Joint Conference on Pervasive and Ubiquitous Computing (UbiComp / ISWC)",
   publisher: "ACM",
-  categories: ["Mobile & Ubiquitous", "HCI"],
+  categories: [
+    "Mobile & Ubiquitous",
+    "HCI",
+    "Systems",
+    "Emerging Technologies",
+    "Digital Health",
+    "CSCW & Social",
+    "Security & Privacy",
+    "Sustainability & ICTD",
+  ],
   coreRank: "A",
   scopusIndexed: true,
   website: "https://ubicomp.org/",

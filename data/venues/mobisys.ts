@@ -10,7 +10,15 @@ export const venue: Venue = {
   fullName:
     "ACM International Conference on Mobile Systems, Applications and Services",
   publisher: "ACM",
-  categories: ["Mobile & Ubiquitous", "Systems"],
+  categories: [
+    "Mobile & Ubiquitous",
+    "Systems",
+    "HCI",
+    "Security & Privacy",
+    "Emerging Technologies",
+    "Digital Health",
+    "AI & Ethics",
+  ],
   coreRank: "A",
   scopusIndexed: true,
   website: "https://www.sigmobile.org/mobisys/",

@@ -11,7 +11,12 @@ export const venue: Venue = {
   publisher: "USENIX",
   categories: [
     "Security & Privacy",
-    "HCI"
+    "HCI",
+    "UI/UX",
+    "Ethics & Policy",
+    "AI & Ethics",
+    "Communication",
+    "Methods & Tools",
   ],
   coreRank: "A",
   scopusIndexed: true,

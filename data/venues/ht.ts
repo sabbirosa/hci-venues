@@ -11,7 +11,12 @@ export const venue: Venue = {
   publisher: "ACM",
   categories: [
     "Web & Social Media",
-    "HCI"
+    "HCI",
+    "Web Mining & IR",
+    "CSCW & Social",
+    "Digital Humanities",
+    "SNA & Communities",
+    "Design",
   ],
   coreRank: "B",
   scopusIndexed: true,

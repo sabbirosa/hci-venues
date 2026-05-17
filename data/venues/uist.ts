@@ -11,7 +11,13 @@ export const venue: Venue = {
   publisher: "ACM",
   categories: [
     "UI/UX",
-    "HCI"
+    "HCI",
+    "Systems",
+    "Computational Interaction",
+    "Multimodal Interfaces",
+    "Novel Devices & Fabrication",
+    "Generative UI",
+    "VR/AR/XR",
   ],
   coreRank: "A*",
   scopusIndexed: true,

@@ -10,7 +10,14 @@ export const venue: Venue = {
   fullName: "ACM SIGCHI Nordic Conference on Human-Computer Interaction",
   publisher: "ACM",
   categories: [
-    "HCI"
+    "HCI",
+    "UI/UX",
+    "Design",
+    "CSCW & Social",
+    "Accessible & Inclusive Design",
+    "Methods & Tools",
+    "Emerging Technologies",
+    "Sustainability & ICTD",
   ],
   coreRank: "Regional",
   scopusIndexed: true,

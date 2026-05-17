@@ -10,7 +10,15 @@ export const venue: Venue = {
   fullName:
     "ACM SIGDOC Conference (Special Interest Group on Design of Communication)",
   publisher: "ACM",
-  categories: ["Communication", "Design"],
+  categories: [
+    "Communication",
+    "Design",
+    "HCI",
+    "UI/UX",
+    "Accessible & Inclusive Design",
+    "AI & Ethics",
+    "Systems",
+  ],
   coreRank: "B",
   scopusIndexed: true,
   website: "https://sigdoc.acm.org",

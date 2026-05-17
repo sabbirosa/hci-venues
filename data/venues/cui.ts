@@ -10,8 +10,14 @@ export const venue: Venue = {
   fullName: "ACM Conference on Conversational User Interfaces",
   publisher: "ACM",
   categories: [
+    "Conversational UX",
+    "NLP in UX",
+    "HCI",
     "UI/UX",
-    "HCI"
+    "Human-AI Collaboration",
+    "Generative UI",
+    "AI & Ethics",
+    "Accessible & Inclusive Design",
   ],
   coreRank: "B",
   scopusIndexed: true,

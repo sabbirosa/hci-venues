@@ -10,8 +10,13 @@ export const venue: Venue = {
   fullName: "ACM International Conference on Multimodal Interaction",
   publisher: "ACM",
   categories: [
+    "Multimodal Interfaces",
     "HCI",
-    "UI/UX"
+    "UI/UX",
+    "Human-AI Collaboration",
+    "VR/AR/XR",
+    "Affective Computing",
+    "Accessible & Inclusive Design",
   ],
   coreRank: "B",
   scopusIndexed: true,

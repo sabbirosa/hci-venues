@@ -33,6 +33,7 @@ import { venue as smsociety } from "./smsociety"
 import { venue as soups } from "./soups"
 import { venue as sui } from "./sui"
 import { venue as tei } from "./tei"
+import { venue as trustbus } from "./trustbus"
 import { venue as ubicomp } from "./ubicomp"
 import { venue as uist } from "./uist"
 import { venue as vrst } from "./vrst"
@@ -51,6 +52,7 @@ const allVenues: Venue[] = [
   chi_play,
   idc,
   tei,
+  trustbus,
   siggraph,
   sigdoc,
   compass,

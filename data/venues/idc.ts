@@ -12,7 +12,12 @@ export const venue: Venue = {
   categories: [
     "Children",
     "Design",
-    "HCI"
+    "HCI",
+    "Learning UX",
+    "Games & Play",
+    "Accessible & Inclusive Design",
+    "Methods & Tools",
+    "CSCW & Social",
   ],
   coreRank: "B",
   scopusIndexed: true,

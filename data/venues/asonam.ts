@@ -1,4 +1,4 @@
-import { Venue } from "@/lib/venues/types"
+import type { Venue } from "@/lib/venues/types"
 
 /**
  * ASONAM — update main-track abstractDeadline per edition (YYYY-MM-DD).
@@ -10,7 +10,17 @@ export const venue: Venue = {
   fullName:
     "IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining",
   publisher: "IEEE/ACM",
-  categories: ["Web & Social Media", "CSCW & Social"],
+  categories: [
+    "Web & Social Media",
+    "CSCW & Social",
+    "SNA & Communities",
+    "Web Mining & IR",
+    "Misinformation & Trust",
+    "Diffusion & Virality",
+    "Politics & Civics",
+    "Sentiment & Opinions",
+    "AI & Ethics",
+  ],
   coreRank: "B",
   scopusIndexed: true,
   editions: [

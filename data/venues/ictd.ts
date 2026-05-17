@@ -11,7 +11,13 @@ export const venue: Venue = {
   publisher: "ACM",
   categories: [
     "Sustainability & ICTD",
-    "HCI"
+    "HCI",
+    "Mobile & Ubiquitous",
+    "Digital Health",
+    "Politics & Civics",
+    "Ethics & Policy",
+    "Domain Applications",
+    "CSCW & Social",
   ],
   coreRank: "B",
   scopusIndexed: true,

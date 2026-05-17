@@ -11,7 +11,12 @@ export const venue: Venue = {
   publisher: "IEEE",
   categories: [
     "HCI",
-    "UI/UX"
+    "UI/UX",
+    "Methods & Tools",
+    "Social Psychology",
+    "Digital Health",
+    "Accessible & Inclusive Design",
+    "Systems",
   ],
   coreRank: "C",
   scopusIndexed: true,

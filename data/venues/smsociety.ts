@@ -11,7 +11,13 @@ export const venue: Venue = {
   publisher: "ACM",
   categories: [
     "Web & Social Media",
-    "CSCW & Social"
+    "CSCW & Social",
+    "Politics & Civics",
+    "Media Studies",
+    "Misinformation & Trust",
+    "Digital Humanities",
+    "HCI",
+    "Ethics & Policy",
   ],
   coreRank: "B",
   scopusIndexed: true,
