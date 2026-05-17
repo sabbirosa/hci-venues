@@ -1,9 +1,6 @@
 import type { Venue } from "@/lib/venues/types"
 
-/**
- * ICWSM — update main-track abstractDeadline per edition (YYYY-MM-DD).
- * Placeholder deadlines marked 2026-12-31 are DUMMY; replace from the official CFP.
- */
+/** ICWSM — scope topics from the official CFP (short-form category labels). */
 export const venue: Venue = {
   id: "icwsm",
   acronym: "ICWSM",
@@ -11,11 +8,31 @@ export const venue: Venue = {
   publisher: "Other",
   categories: [
     "Web & Social Media",
-    "CSCW & Social"
+    "SNA & Communities",
+    "Diffusion & Virality",
+    "Sentiment & Opinions",
+    "Misinformation & Trust",
+    "Web Mining & IR",
+    "Security & Privacy",
+    "Digital Humanities",
+    "Politics & Civics",
+    "Digital Health",
+    "Text & Demographics",
+    "Trends & Forecasting",
+    "Media Studies",
+    "Platform Studies",
+    "Web Linguistics",
+    "Social Psychology",
+    "Engagement & Gamification",
+    "Social Innovation",
+    "UI/UX",
+    "Mobile & Ubiquitous",
+    "Organizational Social",
+    "Communication",
   ],
   coreRank: "A",
   scopusIndexed: true,
-  website: "https://www.icwsm.org/",
+  website: "https://www.icwsm.org",
   editions: [
     {
       year: 2026,
@@ -23,7 +40,16 @@ export const venue: Venue = {
       endDate: "2026-05-29",
       location: "Los Angeles, CA, USA",
       announced: true,
-      abstractDeadline: "2026-01-15",
-    }
+      paperDeadline: "2025-05-15",
+      website: "https://www.icwsm.org/2026",
+    },
+    {
+      year: 2027,
+      location: "Edinburgh, Scotland",
+      announced: false,
+      paperDeadline: "2026-05-15",
+      timezone: "AoE",
+      dateLabel: "Date TBD",
+    },
   ],
 }

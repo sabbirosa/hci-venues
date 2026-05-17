@@ -22,6 +22,8 @@ export const icore2026Summary = [
   { rank: "Other", detail: "162 total" },
 ] as const
 
+const PINNED_TOPIC_CATEGORIES: VenueCategory[] = ["HCI", "CSCW & Social"]
+
 export const allCategories: VenueCategory[] = [
   "HCI",
   "UI/UX",
@@ -39,4 +41,51 @@ export const allCategories: VenueCategory[] = [
   "Children",
   "Graphics",
   "IT & Service Management",
+  "SNA & Communities",
+  "Diffusion & Virality",
+  "Sentiment & Opinions",
+  "Misinformation & Trust",
+  "Web Mining & IR",
+  "Digital Humanities",
+  "Politics & Civics",
+  "Digital Health",
+  "Text & Demographics",
+  "Trends & Forecasting",
+  "Media Studies",
+  "Platform Studies",
+  "Web Linguistics",
+  "Social Psychology",
+  "Engagement & Gamification",
+  "Social Innovation",
+  "Organizational Social",
+  "Methods & Tools",
+  "Critical & Ethnographic",
+  "Domain Applications",
+  "Ethics & Policy",
+  "Emerging Technologies",
+  "Crossing Boundaries",
+  "Explainable AI & Trust",
+  "Conversational UX",
+  "AI UX Personalization",
+  "AI-Augmented Design",
+  "Human-AI Collaboration",
+  "Generative UI",
+  "NLP in UX",
+  "Accessible & Inclusive Design",
+  "Human-Robot Interaction",
+  "Cross-Cultural UX",
+  "Learning UX",
+  "Affective Computing",
+  "Persuasive Technology",
+  "Multimodal Interfaces",
+  "Computational Interaction",
+  "Novel Devices & Fabrication",
+]
+
+/** Topic filter dropdown: HCI and CSCW & Social first, then A–Z. */
+export const topicFilterCategories: VenueCategory[] = [
+  ...PINNED_TOPIC_CATEGORIES,
+  ...allCategories
+    .filter((c) => !PINNED_TOPIC_CATEGORIES.includes(c))
+    .sort((a, b) => a.localeCompare(b)),
 ]

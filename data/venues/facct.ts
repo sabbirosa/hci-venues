@@ -9,13 +9,10 @@ export const venue: Venue = {
   acronym: "FAccT",
   fullName: "ACM Conference on Fairness, Accountability, and Transparency",
   publisher: "ACM",
-  categories: [
-    "AI & Ethics",
-    "HCI"
-  ],
+  categories: ["AI & Ethics", "HCI"],
   coreRank: "A",
   scopusIndexed: true,
-  website: "https://facctconference.org/",
+  website: "https://facctconference.org",
   editions: [
     {
       year: 2026,
@@ -23,7 +20,15 @@ export const venue: Venue = {
       endDate: "2026-06-28",
       location: "Montréal, Canada",
       announced: true,
-      abstractDeadline: "2026-01-15",
-    }
+      abstractDeadline: "2026-01-08",
+      paperDeadline: "2026-01-13",
+      website: "https://facctconference.org/2026",
+    },
+    {
+      year: 2027,
+      announced: false,
+      location: "Date TBD",
+      website: "https://facctconference.org/2027",
+    },
   ],
 }

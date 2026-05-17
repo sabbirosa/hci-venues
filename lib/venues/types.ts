@@ -40,6 +40,49 @@ export type VenueCategory =
   | "Children"
   | "Graphics"
   | "IT & Service Management"
+  /** ICWSM / web & social media scope (short forms). */
+  | "SNA & Communities"
+  | "Diffusion & Virality"
+  | "Sentiment & Opinions"
+  | "Misinformation & Trust"
+  | "Web Mining & IR"
+  | "Digital Humanities"
+  | "Politics & Civics"
+  | "Digital Health"
+  | "Text & Demographics"
+  | "Trends & Forecasting"
+  | "Media Studies"
+  | "Platform Studies"
+  | "Web Linguistics"
+  | "Social Psychology"
+  | "Engagement & Gamification"
+  | "Social Innovation"
+  | "Organizational Social"
+  /** CSCW / PACM HCI scope (short forms). */
+  | "Methods & Tools"
+  | "Critical & Ethnographic"
+  | "Domain Applications"
+  | "Ethics & Policy"
+  | "Emerging Technologies"
+  | "Crossing Boundaries"
+  /** BCS-HCI / BritCHI scope (short forms). */
+  | "Explainable AI & Trust"
+  | "Conversational UX"
+  | "AI UX Personalization"
+  | "AI-Augmented Design"
+  | "Human-AI Collaboration"
+  | "Generative UI"
+  | "NLP in UX"
+  | "Accessible & Inclusive Design"
+  | "Human-Robot Interaction"
+  | "Cross-Cultural UX"
+  | "Learning UX"
+  | "Affective Computing"
+  | "Persuasive Technology"
+  | "Multimodal Interfaces"
+  /** CHI subcommittee scope (short forms). */
+  | "Computational Interaction"
+  | "Novel Devices & Fabrication"
 
 /** One conference year — one item in `Venue.editions` (oldest → newest). */
 export interface ConferenceEdition {
@@ -108,6 +151,8 @@ export type NextEditionState =
       status: "upcoming"
       label: string
       edition: ConferenceEdition
+      /** When submission targets a different year than the next conference. */
+      conferenceEdition?: ConferenceEdition
       countdownDate: string
       countdownKind: "abstract" | "paper"
     }
@@ -115,12 +160,14 @@ export type NextEditionState =
       status: "deadline-passed"
       label: string
       edition: ConferenceEdition
+      conferenceEdition?: ConferenceEdition
       message: string
     }
   | {
       status: "deadline-tba"
       label: string
       edition: ConferenceEdition
+      conferenceEdition?: ConferenceEdition
       message: string
     }
   | {

@@ -16,7 +16,7 @@ import {
   getRollingSubmissionsUrl,
   submissionDeadlineHeading,
 } from "@/lib/venues/get-next-edition"
-import type { Venue } from "@/lib/venues/types"
+import type { ConferenceEdition, Venue } from "@/lib/venues/types"
 
 function Tag({
   children,
@@ -55,14 +55,31 @@ function ConferenceTitle({ label, href }: { label: string; href?: string }) {
   )
 }
 
+function conferenceEditionFor(
+  next: ReturnType<typeof getNextEdition>,
+): ConferenceEdition | null {
+  if (
+    next.status === "upcoming" ||
+    next.status === "deadline-passed" ||
+    next.status === "deadline-tba"
+  ) {
+    return next.conferenceEdition ?? next.edition
+  }
+  if (next.status === "rolling-open" && next.conferenceUpcoming && next.edition) {
+    return next.edition
+  }
+  return null
+}
+
 export function VenueRow({ venue }: { venue: Venue }) {
   const next = getNextEdition(venue)
   const rollingSubmissionsUrl = getRollingSubmissionsUrl(venue)
+  const conferenceEdition = conferenceEditionFor(next)
   const activeEdition =
     next.status === "upcoming" ||
     next.status === "deadline-passed" ||
     next.status === "deadline-tba"
-      ? next.edition
+      ? conferenceEdition
       : next.status === "rolling-open" && next.conferenceUpcoming
         ? next.edition
         : null
@@ -136,7 +153,7 @@ export function VenueRow({ venue }: { venue: Venue }) {
                   <p className="text-sm text-muted-foreground">
                     {formatDateRange(
                       next.edition.startDate,
-                      next.edition.endDate,
+                      next.edition.endDate
                     )}
                   </p>
                 )}
@@ -179,25 +196,36 @@ export function VenueRow({ venue }: { venue: Venue }) {
               )}
             </div>
 
-            <div className="border-t border-border pt-2">
-              <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-                Conference
-              </p>
-              <ConferenceTitle label={next.label} href={next.edition.website} />
-              {next.edition.location && (
-                <p className="truncate text-sm text-muted-foreground">
-                  {next.edition.location}
+            {conferenceEdition && (
+              <div className="border-t border-border pt-2">
+                <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+                  Conference
                 </p>
-              )}
-              {next.edition.startDate && (
-                <p className="text-sm text-muted-foreground">
-                  {formatDateRange(
-                    next.edition.startDate,
-                    next.edition.endDate,
-                  )}
-                </p>
-              )}
-            </div>
+                <ConferenceTitle
+                  label={`${venue.acronym} ${conferenceEdition.year}`}
+                  href={conferenceEdition.website}
+                />
+                {conferenceEdition.location && (
+                  <p className="truncate text-sm text-muted-foreground">
+                    {conferenceEdition.location}
+                  </p>
+                )}
+                {conferenceEdition.startDate ? (
+                  <p className="text-sm text-muted-foreground">
+                    {formatDateRange(
+                      conferenceEdition.startDate,
+                      conferenceEdition.endDate,
+                    )}
+                  </p>
+                ) : (
+                  conferenceEdition.dateLabel && (
+                    <p className="text-sm text-muted-foreground">
+                      {conferenceEdition.dateLabel}
+                    </p>
+                  )
+                )}
+              </div>
+            )}
           </>
         )}
 

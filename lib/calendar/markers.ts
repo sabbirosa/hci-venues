@@ -1,6 +1,13 @@
-import { colorForCategories, DEADLINE_COLOR } from "@/lib/calendar/category-colors"
+import {
+  colorForCategories,
+  DEADLINE_COLOR,
+} from "@/lib/calendar/category-colors"
 import { isEditionRolling } from "@/lib/venues/get-next-edition"
-import type { ConferenceEdition, Venue, VenueCategory } from "@/lib/venues/types"
+import type {
+  ConferenceEdition,
+  Venue,
+  VenueCategory,
+} from "@/lib/venues/types"
 
 export type CalendarMarkerKind =
   | "abstract-deadline"
@@ -32,7 +39,7 @@ function editionLabel(acronym: string, edition: ConferenceEdition): string {
 
 export function buildCalendarMarkers(
   venues: Venue[],
-  year: number,
+  year: number
 ): CalendarMarker[] {
   const markers: CalendarMarker[] = []
 
@@ -113,7 +120,9 @@ export function getCalendarYearRange(venues: Venue[]): {
         edition.year,
         edition.startDate ? Number(edition.startDate.slice(0, 4)) : null,
         edition.endDate ? Number(edition.endDate.slice(0, 4)) : null,
-        edition.paperDeadline ? Number(edition.paperDeadline.slice(0, 4)) : null,
+        edition.paperDeadline
+          ? Number(edition.paperDeadline.slice(0, 4))
+          : null,
         edition.abstractDeadline
           ? Number(edition.abstractDeadline.slice(0, 4))
           : null,
@@ -135,7 +144,7 @@ export function isoInRange(iso: string, start: string, end: string): boolean {
 
 export function markersOnDay(
   markers: CalendarMarker[],
-  iso: string,
+  iso: string
 ): CalendarMarker[] {
   return markers.filter((m) => isoInRange(iso, m.start, m.end))
 }

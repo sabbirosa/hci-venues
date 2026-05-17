@@ -1,18 +1,30 @@
 import type { Venue } from "@/lib/venues/types"
 
-/**
- * OzCHI — update main-track abstractDeadline per edition (YYYY-MM-DD).
- * Placeholder deadlines marked 2026-12-31 are DUMMY; replace from the official CFP.
- */
+/** OzCHI — scope themes from the official conference description. */
 export const venue: Venue = {
   id: "ozchi",
   acronym: "OzCHI",
   fullName: "Australian Conference on Human-Computer Interaction",
   publisher: "ACM",
-  categories: ["HCI"],
+  categories: [
+    "HCI",
+    "UI/UX",
+    "Methods & Tools",
+    "Emerging Technologies",
+    "AI & Ethics",
+    "Human-Robot Interaction",
+    "Generative UI",
+    "Mobile & Ubiquitous",
+    "Accessible & Inclusive Design",
+    "Design",
+    "Digital Health",
+    "CSCW & Social",
+  ],
   coreRank: "Regional",
   scopusIndexed: true,
   website: "https://www.ozchi.org/",
+  notes:
+    "CORE Australasian B. Welcoming, diverse community with strong emphasis on mentorship and research development.",
   editions: [
     {
       year: 2026,
@@ -24,5 +36,4 @@ export const venue: Venue = {
       website: "https://www.ozchi.org/2026",
     },
   ],
-  notes: "CORE Australasian B.",
 }

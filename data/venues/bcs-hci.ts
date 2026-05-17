@@ -1,15 +1,40 @@
 import type { Venue } from "@/lib/venues/types"
 
-/**
- * BCS-HCI — update main-track abstractDeadline per edition (YYYY-MM-DD).
- * Placeholder deadlines marked 2026-12-31 are DUMMY; replace from the official CFP.
- */
+/** BCS-HCI (BritCHI) — scope topics from the official CFP track list. */
 export const venue: Venue = {
   id: "bcs-hci",
   acronym: "BCS-HCI",
   fullName: "BCS Conference on Human-Computer Interaction (BritCHI)",
   publisher: "BCS",
-  categories: ["HCI"],
+  categories: [
+    "HCI",
+    "UI/UX",
+    "AI & Ethics",
+    "Explainable AI & Trust",
+    "Conversational UX",
+    "AI UX Personalization",
+    "AI-Augmented Design",
+    "Human-AI Collaboration",
+    "Generative UI",
+    "NLP in UX",
+    "Methods & Tools",
+    "Accessible & Inclusive Design",
+    "VR/AR/XR",
+    "Multimodal Interfaces",
+    "Digital Health",
+    "Graphics",
+    "Games & Play",
+    "CSCW & Social",
+    "Human-Robot Interaction",
+    "Cross-Cultural UX",
+    "Sustainability & ICTD",
+    "Security & Privacy",
+    "Learning UX",
+    "Affective Computing",
+    "Persuasive Technology",
+    "Mobile & Ubiquitous",
+    "Design",
+  ],
   coreRank: "Regional",
   scopusIndexed: true,
   website: "https://www.britchi.uk",

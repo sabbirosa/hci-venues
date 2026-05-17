@@ -1,5 +1,4 @@
 import {
-  formatShortDate,
   isDeadlineWithinDays,
   NEARBY_DEADLINE_DAYS,
   parseDay,
@@ -62,13 +61,44 @@ function getNextUnannouncedEdition(venue: Venue): ConferenceEdition | null {
   )
 }
 
+/** Soonest open submission deadline across all editions (includes unannounced). */
+function getEditionWithOpenSubmission(
+  editions: ConferenceEdition[],
+  now: Date,
+): ConferenceEdition | undefined {
+  const open = editions
+    .map((edition) => ({ edition, sub: getSubmissionDeadline(edition) }))
+    .filter(
+      (
+        x,
+      ): x is {
+        edition: ConferenceEdition
+        sub: { date: string; kind: "abstract" | "paper" }
+      } => x.sub !== null && parseDay(x.sub.date) > now,
+    )
+    .sort((a, b) => a.sub.date.localeCompare(b.sub.date))
+
+  return open[0]?.edition
+}
+
 function buildPassedScheduleMessage(
   venue: Venue,
   previous: ConferenceEdition
 ): string {
   const placeholder = getNextUnannouncedEdition(venue)
-  const nextYear = placeholder?.year ?? previous.year + 1
-  return `${editionLabel(venue.acronym, previous)} has passed · ${venue.acronym} ${nextYear} not yet announced`
+  if (placeholder) {
+    return `${editionLabel(venue.acronym, previous)} has passed · ${venue.acronym} ${placeholder.year} not yet announced`
+  }
+  return `${editionLabel(venue.acronym, previous)} has passed · next edition not yet announced`
+}
+
+/** Abstract deadline if set, otherwise paper — same rule as {@link getSubmissionDeadline}. */
+function hasSubmissionWindowClosed(
+  edition: ConferenceEdition,
+  now: Date
+): boolean {
+  const submission = getSubmissionDeadline(edition)
+  return submission !== null && parseDay(submission.date) <= now
 }
 
 export function isEditionRolling(
@@ -178,25 +208,23 @@ export function getNextEdition(
   venue: Venue,
   now: Date = new Date()
 ): NextEditionState {
-  const announced = (venue.editions ?? []).filter((e) => e.announced)
+  const allEditions = venue.editions ?? []
+  const announced = allEditions.filter((e) => e.announced)
 
   if (usesRollingSubmissions(venue)) {
     return getRollingOpenState(venue, announced, now)
   }
 
   const upcomingConference = getUpcomingConferenceEdition(announced, now)
+  const openSubmissionEdition = getEditionWithOpenSubmission(allEditions, now)
+  const submissionEdition = openSubmissionEdition ?? upcomingConference
 
-  if (!upcomingConference) {
+  if (!submissionEdition) {
     const previous = getPreviousConferenceEdition(announced, now)
-    const placeholder = getNextUnannouncedEdition(venue)
-    const nextYear = placeholder?.year ?? (previous ? previous.year + 1 : null)
 
-    const message =
-      previous && nextYear
-        ? `${editionLabel(venue.acronym, previous)} has passed · ${venue.acronym} ${nextYear} not yet announced`
-        : previous
-          ? `${editionLabel(venue.acronym, previous)} has passed · next edition not yet announced`
-          : "Next edition not yet announced"
+    const message = previous
+      ? buildPassedScheduleMessage(venue, previous)
+      : "Next edition not yet announced"
 
     return {
       status: "passed-awaiting",
@@ -206,32 +234,41 @@ export function getNextEdition(
     }
   }
 
-  const label = editionLabel(venue.acronym, upcomingConference)
-  const submission = getSubmissionDeadline(upcomingConference)
+  const conferenceEdition =
+    upcomingConference &&
+    upcomingConference.year !== submissionEdition.year
+      ? upcomingConference
+      : undefined
+
+  const label = editionLabel(venue.acronym, submissionEdition)
+  const submission = getSubmissionDeadline(submissionEdition)
 
   if (submission && parseDay(submission.date) > now) {
     return {
       status: "upcoming",
       label,
-      edition: upcomingConference,
+      edition: submissionEdition,
+      conferenceEdition,
       countdownDate: submission.date,
       countdownKind: submission.kind,
     }
   }
 
-  if (submission) {
+  if (hasSubmissionWindowClosed(submissionEdition, now)) {
     return {
       status: "deadline-passed",
       label,
-      edition: upcomingConference,
-      message: `${submission.kind === "abstract" ? "Abstract" : "Paper"} deadline passed (${formatShortDate(submission.date)})`,
+      edition: submissionEdition,
+      conferenceEdition,
+      message: buildPassedScheduleMessage(venue, submissionEdition),
     }
   }
 
   return {
     status: "deadline-tba",
     label,
-    edition: upcomingConference,
+    edition: submissionEdition,
+    conferenceEdition,
     message: "Submission deadline not yet announced",
   }
 }

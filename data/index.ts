@@ -1,2 +1,6 @@
 export { venues } from "./venues/index"
-export { allCategories, allPublishers } from "./constants"
+export {
+  allCategories,
+  allPublishers,
+  topicFilterCategories,
+} from "./constants"

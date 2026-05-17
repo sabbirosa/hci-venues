@@ -1,20 +1,46 @@
 import type { Venue } from "@/lib/venues/types"
 
 /**
- * CHI — update main-track abstractDeadline per edition (YYYY-MM-DD).
- * Placeholder deadlines marked 2026-12-31 are DUMMY; replace from the official CFP.
+ * CHI — topics from CHI 2026 subcommittees
+ * (https://chi2026.acm.org/selecting-a-subcommittee/).
  */
 export const venue: Venue = {
   id: "chi",
   acronym: "CHI",
   fullName: "ACM Conference on Human Factors in Computing Systems",
   publisher: "ACM",
-  type: "conference",
-  categories: ["HCI"],
+  categories: [
+    "HCI",
+    "UI/UX",
+    "Accessible & Inclusive Design",
+    "Systems",
+    "Novel Devices & Fabrication",
+    "Computational Interaction",
+    "Sustainability & ICTD",
+    "Critical & Ethnographic",
+    "Ethics & Policy",
+    "Design",
+    "Games & Play",
+    "Digital Health",
+    "Multimodal Interfaces",
+    "VR/AR/XR",
+    "CSCW & Social",
+    "Learning UX",
+    "Children",
+    "Security & Privacy",
+    "Domain Applications",
+    "Methods & Tools",
+    "Graphics",
+    "Human-AI Collaboration",
+    "Generative UI",
+    "AI & Ethics",
+    "Emerging Technologies",
+  ],
   coreRank: "A*",
   scopusIndexed: true,
   featured: true,
   website: "https://chi.acm.org",
+  notes: "CHI 2027 theme: Bridges. Papers use revise-and-resubmit review.",
   editions: [
     {
       year: 2026,

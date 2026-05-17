@@ -9,13 +9,10 @@ export const venue: Venue = {
   acronym: "DIS",
   fullName: "ACM Designing Interactive Systems Conference",
   publisher: "ACM",
-  categories: [
-    "HCI",
-    "Design"
-  ],
+  categories: ["HCI", "Design"],
   coreRank: "A",
   scopusIndexed: true,
-  website: "https://dis.acm.org/",
+  website: "https://dis.acm.org",
   editions: [
     {
       year: 2026,
@@ -24,6 +21,13 @@ export const venue: Venue = {
       location: "Singapore",
       announced: true,
       abstractDeadline: "2026-01-09",
-    }
+      paperDeadline: "2026-01-19",
+      website: "https://dis.acm.org/2026",
+    },
+    {
+      year: 2027,
+      announced: false,
+      location: "Stockholm, Sweden",
+    },
   ],
 }

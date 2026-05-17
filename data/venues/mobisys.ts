@@ -28,6 +28,7 @@ export const venue: Venue = {
       announced: true,
       abstractDeadline: "2025-11-28",
       paperDeadline: "2025-12-05",
+      website: "https://www.sigmobile.org/mobisys/2026",
     },
   ],
 }

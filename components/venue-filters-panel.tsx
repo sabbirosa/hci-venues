@@ -6,7 +6,7 @@ import { FilterField, type FilterOption } from "@/components/filter-field"
 import { CoreRankHelp } from "@/components/tooltips"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { allCategories, allPublishers } from "@/data"
+import { allPublishers, topicFilterCategories } from "@/data"
 import type { CoreRank } from "@/lib/venues/types"
 import { cn } from "@/lib/utils"
 
@@ -27,7 +27,7 @@ const coreOptions: FilterOption[] = [
   { value: "all", label: "All ranks" },
   ...coreRanks.map((r) => ({ value: r, label: `CORE ${r}` })),
 ]
-const categoryOptions = withAllOption(allCategories, "All topics")
+const categoryOptions = withAllOption(topicFilterCategories, "All topics")
 const scopusOptions: FilterOption[] = [
   { value: "all", label: "All" },
   { value: "yes", label: "Indexed" },

@@ -1,25 +1,32 @@
-import { Venue } from "@/lib/venues/types"
+import type { Venue } from "@/lib/venues/types"
 
-/**
- * ACE — update main-track abstractDeadline per edition (YYYY-MM-DD).
- * Placeholder deadlines marked 2026-12-31 are DUMMY; replace from the official CFP.
- */
+/** ACE (Australasian Computing Education Conference), in cooperation with SIGCSE. */
 export const venue: Venue = {
   id: "ace",
   acronym: "ACE",
-  fullName: "ACM Advances in Computer Entertainment",
+  fullName: "Australasian Computing Education Conference",
   publisher: "ACM",
-  type: "conference",
-  categories: ["Games & Play"],
-  coreRank: "C",
+  categories: ["HCI"],
+  coreRank: "Regional",
   scopusIndexed: true,
+  website: "https://acsw.core.edu.au/",
+  notes:
+    "Held with Australasian Computer Science Week (ACSW). In cooperation with SIGCSE.",
   editions: [
     {
-      year: 2025,
-      startDate: "2025-12-15",
-      endDate: "2025-12-18",
+      year: 2026,
+      startDate: "2026-02-09",
+      endDate: "2026-02-13",
+      location: "Melbourne, Australia",
       announced: true,
-      abstractDeadline: "2025-07-01",
+      paperDeadline: "2025-11-03",
+      timezone: "AoE",
+      website: "https://aceconference2026.github.io/",
+      programLink: "https://acsw.core.edu.au/2026-program",
+    },
+    {
+      year: 2027,
+      announced: false,
     },
   ],
 }

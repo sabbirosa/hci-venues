@@ -9,13 +9,10 @@ export const venue: Venue = {
   acronym: "SIGGRAPH",
   fullName: "ACM SIGGRAPH Conference",
   publisher: "ACM",
-  categories: [
-    "Graphics",
-    "VR/AR/XR"
-  ],
+  categories: ["Graphics", "VR/AR/XR"],
   coreRank: "A*",
   scopusIndexed: true,
-  website: "https://www.siggraph.org/",
+  website: "https://www.siggraph.org",
   editions: [
     {
       year: 2026,
@@ -23,7 +20,17 @@ export const venue: Venue = {
       endDate: "2026-07-23",
       location: "Los Angeles, CA, USA",
       announced: true,
-      abstractDeadline: "2026-01-27",
-    }
+      paperDeadline: "2026-01-23",
+      timezone: "GMT",
+      website: "https://s2026.siggraph.org",
+    },
+    {
+      year: 2027,
+      startDate: "2027-08-08",
+      endDate: "2027-08-12",
+      location: "Anaheim, CA, USA",
+      announced: true,
+      website: "https://s2027.siggraph.org",
+    },
   ],
 }
