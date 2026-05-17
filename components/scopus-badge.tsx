@@ -16,7 +16,7 @@ export function ScopusBadge({ className }: { className?: string }) {
       <TooltipTrigger asChild>
         <span
           className={cn(
-            "inline-block cursor-default bg-muted px-1.5 py-0.5 text-xs font-semibold tracking-widest text-muted-foreground uppercase",
+            "inline-block cursor-default bg-blue-500/80 px-1.5 py-0.5 text-xs font-semibold tracking-widest text-white uppercase",
             className,
           )}
         >

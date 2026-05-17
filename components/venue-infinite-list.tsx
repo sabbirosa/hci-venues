@@ -3,20 +3,21 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 
 import { VenueRow } from "@/components/venue-row"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import type { Venue } from "@/lib/venues/types"
 
 const PAGE_SIZE = 12
 
 export function VenueInfiniteList({ venues }: { venues: Venue[] }) {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const viewportRef = useRef<HTMLDivElement>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
   const listKey = venues.map((v) => v.id).join(",")
 
   useEffect(() => {
     setVisibleCount(PAGE_SIZE)
-    scrollRef.current?.scrollTo({ top: 0 })
+    viewportRef.current?.scrollTo({ top: 0 })
   }, [listKey])
 
   const visible = venues.slice(0, visibleCount)
@@ -27,7 +28,7 @@ export function VenueInfiniteList({ venues }: { venues: Venue[] }) {
   }, [venues.length])
 
   useEffect(() => {
-    const root = scrollRef.current
+    const root = viewportRef.current
     const sentinel = sentinelRef.current
     if (!root || !sentinel || !hasMore) return
 
@@ -47,23 +48,22 @@ export function VenueInfiniteList({ venues }: { venues: Venue[] }) {
   }
 
   return (
-    <div
-      ref={scrollRef}
-      className="min-h-0 flex-1 scrollbar-none overflow-y-auto overscroll-contain pb-2"
-    >
-      <div className="divide-y divide-border border border-border">
-        {visible.map((venue) => (
-          <VenueRow key={venue.id} venue={venue} />
-        ))}
+    <ScrollArea className="min-h-0 flex-1" viewportRef={viewportRef}>
+      <div className="pb-2">
+        <div className="divide-y divide-border border border-border">
+          {visible.map((venue) => (
+            <VenueRow key={venue.id} venue={venue} />
+          ))}
+        </div>
+
+        <div ref={sentinelRef} className="h-px shrink-0" aria-hidden />
+
+        {hasMore && (
+          <p className="py-4 text-center text-sm text-muted-foreground">
+            Loading more…
+          </p>
+        )}
       </div>
-
-      <div ref={sentinelRef} className="h-px shrink-0" aria-hidden />
-
-      {hasMore && (
-        <p className="py-4 text-center text-sm text-muted-foreground">
-          Loading more…
-        </p>
-      )}
-    </div>
+    </ScrollArea>
   )
 }

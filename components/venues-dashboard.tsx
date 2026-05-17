@@ -1,51 +1,74 @@
 "use client"
 
-import Link from "next/link"
-import { useMemo } from "react"
+import { RiFilter3Line } from "@remixicon/react"
+import { useMemo, useState } from "react"
 
-import { CoreRankBadge } from "@/components/core-rank-badge"
-import { FilterField, type FilterOption } from "@/components/filter-field"
-import { CoreRankHelp } from "@/components/tooltips"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { VenueDashboardHeader } from "@/components/venue-dashboard-header"
+import { VenueFiltersPanel } from "@/components/venue-filters-panel"
 import { VenueInfiniteList } from "@/components/venue-infinite-list"
-import { allCategories, allPublishers, venues } from "@/data"
-import { NEARBY_DEADLINE_DAYS } from "@/lib/venues/dates"
+import { venues } from "@/data"
 import { countVenuesWithDeadlineNearby } from "@/lib/venues/get-next-edition"
 import { compareVenues } from "@/lib/venues/sort-venues"
-import type { CoreRank, VenueCategory } from "@/lib/venues/types"
+import type { VenueCategory } from "@/lib/venues/types"
 import { useVenueFilters } from "@/lib/venues/use-venue-filters"
 
-const coreRanks: CoreRank[] = ["A*", "A", "B", "C", "Regional", "Unranked"]
-
-function withAllOption(
-  items: readonly string[],
-  allLabel = "All"
-): FilterOption[] {
-  return [
-    { value: "all", label: allLabel },
-    ...items.map((item) => ({ value: item, label: item })),
-  ]
+function VenueListToolbar({ total }: { total: number }) {
+  return (
+    <div className="flex shrink-0 items-center justify-between py-3 lg:pt-4">
+      <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+        Venues
+      </p>
+      <p className="text-sm text-muted-foreground">{total} total</p>
+    </div>
+  )
 }
 
-const publisherOptions = withAllOption(allPublishers)
-const coreOptions: FilterOption[] = [
-  { value: "all", label: "All ranks" },
-  ...coreRanks.map((r) => ({ value: r, label: `CORE ${r}` })),
-]
-const categoryOptions = withAllOption(allCategories, "All topics")
-const scopusOptions: FilterOption[] = [
-  { value: "all", label: "All" },
-  { value: "yes", label: "Indexed" },
-  { value: "no", label: "Not indexed" },
-]
+function SidebarFilters({
+  venueCount,
+  upcomingNearbyCount,
+  filterPanelProps,
+}: {
+  venueCount: number
+  upcomingNearbyCount: number
+  filterPanelProps: React.ComponentProps<typeof VenueFiltersPanel>
+}) {
+  return (
+    <>
+      <VenueDashboardHeader
+        className="pb-4"
+        venueCount={venueCount}
+        upcomingNearbyCount={upcomingNearbyCount}
+      />
+      <VenueFiltersPanel className="pb-4" {...filterPanelProps} />
+      <footer className="space-y-3 text-sm text-muted-foreground">
+        <p>
+          CORE ranks from{" "}
+          <a
+            href="https://portal.core.edu.au/conf-ranks/"
+            className="text-primary hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            portal.core.edu.au
+          </a>
+          .
+        </p>
+      </footer>
+    </>
+  )
+}
 
 export function VenuesDashboard() {
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const {
     filters: { search, category, publisher, core, scopus },
     searchInput,
@@ -87,154 +110,105 @@ export function VenuesDashboard() {
     []
   )
 
+  const filterPanelProps = {
+    searchInput,
+    publisher,
+    core,
+    category,
+    scopus,
+    hasActiveFilters,
+    activeFilterCount,
+    onSearchChange: setSearch,
+    onPublisherChange: setPublisher,
+    onCoreChange: setCore,
+    onCategoryChange: setCategory,
+    onScopusChange: setScopus,
+    onClearFilters: clearFilters,
+  }
+
+  const sidebarContent = (
+    <SidebarFilters
+      venueCount={venues.length}
+      upcomingNearbyCount={upcomingNearbyCount}
+      filterPanelProps={filterPanelProps}
+    />
+  )
+
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col leading-loose">
-      <ResizablePanelGroup
-        id="venues-layout"
-        orientation="horizontal"
-        defaultLayout={{ sidebar: 33, main: 67 }}
-        className="h-full min-h-0 w-full flex-1"
-      >
-        <ResizablePanel
-          id="sidebar"
-          defaultSize="33"
-          minSize="20"
-          maxSize="50"
-          className="flex flex-col"
+      {/* Mobile */}
+      <div className="flex h-full min-h-0 flex-col lg:hidden">
+        <header className="shrink-0 border-b border-border bg-background px-4 py-4">
+          <VenueDashboardHeader
+            venueCount={venues.length}
+            upcomingNearbyCount={upcomingNearbyCount}
+            compact
+          />
+        </header>
+
+        <main className="flex min-h-0 flex-1 flex-col px-4">
+          <VenueListToolbar total={filtered.length} />
+          <VenueInfiniteList venues={filtered} />
+        </main>
+
+        <Drawer
+          open={filtersOpen}
+          onOpenChange={setFiltersOpen}
+          direction="left"
         >
-          <aside className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden p-4">
-            <div className="min-h-0 flex-1 scrollbar-none overflow-y-auto overscroll-contain">
-              <header className="pb-4">
-                <h1 className="text-xl font-medium">HCI Venues Tracker</h1>
-                <p className="text-muted-foreground">
-                  Rankings (CORE), Scopus indexing, categories, and countdowns
-                  to paper submission deadlines.
-                </p>
-                <p className="text-muted-foreground">
-                  {venues.length} venues · {upcomingNearbyCount} with upcoming
-                  deadlines in the next {NEARBY_DEADLINE_DAYS} days
-                </p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Hover a <CoreRankBadge rank="A*" className="align-middle" />{" "}
-                  tag in the list to see what each rank means.
-                </p>
-              </header>
+          <DrawerContent className="flex h-full max-h-svh flex-col rounded-none data-[vaul-drawer-direction=left]:mt-0 data-[vaul-drawer-direction=left]:max-h-svh data-[vaul-drawer-direction=left]:w-[min(100vw-3rem,22rem)]">
+            <DrawerHeader className="relative shrink-0 border-b border-border pb-3">
+              <DrawerTitle>Filters</DrawerTitle>
+              <DrawerClose asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute top-3 right-3 h-8 px-2 tracking-normal normal-case"
+                >
+                  Done
+                </Button>
+              </DrawerClose>
+            </DrawerHeader>
+            <ScrollArea className="min-h-0 flex-1">
+              <div className="p-4">{sidebarContent}</div>
+            </ScrollArea>
+          </DrawerContent>
+        </Drawer>
 
-              <div className="sticky top-0 z-10 bg-background pb-4">
-                <section className="space-y-4 border border-border bg-background p-4 shadow-sm">
-                  <div className="space-y-2">
-                    <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-                      Search
-                    </p>
-                    <Input
-                      type="search"
-                      placeholder="Acronym or name…"
-                      value={searchInput}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                  </div>
-
-                  <FilterField
-                    label="Publisher"
-                    value={publisher}
-                    onValueChange={setPublisher}
-                    options={publisherOptions}
-                  />
-
-                  <FilterField
-                    label="CORE rank"
-                    labelExtra={<CoreRankHelp />}
-                    value={core}
-                    onValueChange={setCore}
-                    options={coreOptions}
-                  />
-
-                  <FilterField
-                    label="Topic"
-                    value={category}
-                    onValueChange={setCategory}
-                    options={categoryOptions}
-                  />
-
-                  <FilterField
-                    label="Scopus indexed"
-                    value={scopus}
-                    onValueChange={setScopus}
-                    options={scopusOptions}
-                  />
-
-                  {hasActiveFilters && (
-                    <Button
-                      type="button"
-                      variant="link"
-                      size="xs"
-                      className="h-auto px-0 tracking-normal normal-case"
-                      onClick={clearFilters}
-                    >
-                      Clear filter{activeFilterCount === 1 ? "" : "s"}
-                    </Button>
-                  )}
-
-                  <div className="space-y-2 pt-4">
-                    <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-                      Explore
-                    </p>
-                    <Link
-                      href="/calendar"
-                      className="block text-sm font-medium tracking-widest text-primary uppercase hover:underline"
-                    >
-                      Calendar →
-                    </Link>
-                    <Link
-                      href="/past-deadlines"
-                      className="block text-sm font-medium tracking-widest text-primary uppercase hover:underline"
-                    >
-                      Past Deadlines →
-                    </Link>
-                  </div>
-                </section>
-              </div>
-
-              <footer className="space-y-3 pt-2 text-sm text-muted-foreground">
-                <p>
-                  CORE ranks from{" "}
-                  <a
-                    href="https://portal.core.edu.au/conf-ranks/"
-                    className="text-primary hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    portal.core.edu.au
-                  </a>
-                  .
-                </p>
-              </footer>
-            </div>
-          </aside>
-        </ResizablePanel>
-
-        <ResizableHandle />
-
-        <ResizablePanel
-          id="main"
-          defaultSize="67"
-          minSize="35"
-          className="flex flex-col"
+        <Button
+          type="button"
+          size="icon-lg"
+          className="fixed right-4 bottom-4 z-40 size-14 rounded-full shadow-lg"
+          aria-label={
+            hasActiveFilters
+              ? `Open filters (${activeFilterCount} active)`
+              : "Open filters"
+          }
+          onClick={() => setFiltersOpen(true)}
         >
-          <main className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden px-4">
-            <div className="mb-2 flex shrink-0 items-center justify-between border-b border-border pt-4">
-              <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-                Venues
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {filtered.length} total
-              </p>
-            </div>
+          <RiFilter3Line className="size-5" />
+          {hasActiveFilters && (
+            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-foreground text-[10px] font-bold text-primary">
+              {activeFilterCount}
+            </span>
+          )}
+        </Button>
+      </div>
 
-            <VenueInfiniteList venues={filtered} />
-          </main>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+      {/* Desktop */}
+      <div className="hidden h-full min-h-0 w-full flex-1 lg:flex">
+        <aside className="flex h-full min-h-0 w-full max-w-sm shrink-0 basis-[33%] flex-col border-r border-border bg-background">
+          <ScrollArea className="min-h-0 flex-1">
+            <div className="p-4">{sidebarContent}</div>
+          </ScrollArea>
+        </aside>
+
+        <main className="flex h-full min-h-0 min-w-0 flex-1 flex-col px-4">
+          <VenueListToolbar total={filtered.length} />
+          <VenueInfiniteList venues={filtered} />
+        </main>
+      </div>
     </div>
   )
 }

@@ -111,7 +111,7 @@ function MonthGrid({
 
 function CalendarLegend() {
   return (
-    <aside className="border-border w-44 shrink-0 border-l pl-4 lg:w-52">
+    <aside className="border-border w-full shrink-0 border-t pt-4 lg:w-52 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-4">
       <div className="sticky top-0 space-y-3">
         <p className="text-muted-foreground text-xs font-semibold uppercase tracking-widest">
           Legend
@@ -164,7 +164,7 @@ export function YearCalendar({
   }, [year, min, max])
 
   return (
-    <div className="flex min-h-0 gap-6">
+    <div className="flex min-h-0 flex-col gap-6 lg:flex-row">
       <div className="min-w-0 flex-1 space-y-8">
       <div className="border-border flex items-center justify-center gap-2 border py-3">
         <Button
@@ -178,7 +178,7 @@ export function YearCalendar({
           <RiArrowLeftSLine className="size-5" />
         </Button>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
           {windowYears.map((y) => (
             <button
               key={y}

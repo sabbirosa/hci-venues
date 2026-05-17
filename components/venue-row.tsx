@@ -31,7 +31,7 @@ export function VenueRow({ venue }: { venue: Venue }) {
   const next = getNextEdition(venue)
 
   return (
-    <article className="flex gap-6 p-4">
+    <article className="flex flex-col gap-4 p-4 sm:flex-row sm:gap-6">
       <div className="min-w-0 flex-1 space-y-1">
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="text-base font-medium">{venue.acronym}</h2>
@@ -64,7 +64,7 @@ export function VenueRow({ venue }: { venue: Venue }) {
         )}
       </div>
 
-      <div className="w-60 shrink-0 space-y-3">
+      <div className="w-full shrink-0 space-y-3 sm:w-60">
         {(next.status === "upcoming" ||
           next.status === "deadline-passed" ||
           next.status === "deadline-tba") && (

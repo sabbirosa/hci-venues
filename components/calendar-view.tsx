@@ -3,6 +3,7 @@
 import { useCallback, useMemo } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { YearCalendar } from "@/components/year-calendar"
 import { venues } from "@/data"
 import { getCalendarYearRange } from "@/lib/calendar/markers"
@@ -26,18 +27,20 @@ export function CalendarView() {
       params.set("year", String(nextYear))
       router.replace(`${pathname}?${params.toString()}`, { scroll: false })
     },
-    [pathname, router, searchParams],
+    [pathname, router, searchParams]
   )
 
   return (
-    <div className="scrollbar-none h-full min-h-0 space-y-4 overflow-y-auto overscroll-contain">
-      <header>
-        <h1 className="text-xl font-medium">Calendar</h1>
-        <p className="text-muted-foreground">
-          Submission deadlines and conference dates across all venues.
-        </p>
-      </header>
-      <YearCalendar venues={venues} year={year} onYearChange={onYearChange} />
-    </div>
+    <ScrollArea className="h-full min-h-0">
+      <div className="space-y-4 pr-3">
+        <header>
+          <h1 className="text-xl font-medium">Calendar</h1>
+          <p className="text-muted-foreground">
+            Submission deadlines and conference dates across all venues.
+          </p>
+        </header>
+        <YearCalendar venues={venues} year={year} onYearChange={onYearChange} />
+      </div>
+    </ScrollArea>
   )
 }
