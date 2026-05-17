@@ -20,7 +20,7 @@ export function SiteContainer({
       className={cn(
         "mx-auto flex h-svh max-h-svh w-full max-w-6xl flex-col overflow-hidden px-4 sm:px-6",
         isHome ? "py-0" : "py-6",
-        className,
+        className
       )}
     >
       <SiteNav hideOnHome />
