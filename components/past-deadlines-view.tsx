@@ -29,8 +29,7 @@ export function PastDeadlinesView() {
         <header className="space-y-2">
           <h1 className="text-xl font-medium">Past Deadlines</h1>
           <p className="text-muted-foreground">
-            Proceedings whose submission deadlines have passed — one row per
-            edition.
+            Proceedings whose submission deadlines have passed
           </p>
         </header>
 
@@ -46,14 +45,10 @@ export function PastDeadlinesView() {
           />
         </div>
 
-        <p className="text-sm text-muted-foreground">
-          {filtered.length} of {proceedings.length} shown
-        </p>
-
         {filtered.length === 0 ? (
           <p className="text-muted-foreground">No past proceedings match.</p>
         ) : (
-          <div className="divide-y divide-border border-t border-border">
+          <div className="divide-y divide-border">
             {filtered.map((p) => (
               <PastDeadlineRow
                 key={`${p.venue.id}-${p.edition.editionId ?? p.edition.year}`}

@@ -83,7 +83,10 @@ export function VenuesDashboardSkeleton() {
             <div className="space-y-4 p-4">
               <HeaderSkeleton />
               <FilterPanelSkeleton />
-              <Skeleton className="h-4 w-full max-w-xs" />
+              <div className="space-y-2 pt-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-4/5" />
+              </div>
             </div>
           </ScrollArea>
         </aside>

@@ -1,8 +1,8 @@
 "use client"
 
 import { CoreRankBadge } from "@/components/core-rank-badge"
-import { ScopusBadge } from "@/components/scopus-badge"
 import { Countdown } from "@/components/countdown"
+import { ScopusBadge } from "@/components/scopus-badge"
 import { cn } from "@/lib/utils"
 import { formatDateRange, formatShortDate } from "@/lib/venues/dates"
 import { getNextEdition } from "@/lib/venues/get-next-edition"
@@ -42,7 +42,7 @@ export function VenueRow({ venue }: { venue: Venue }) {
           <span className="font-medium text-foreground">Publisher:</span>{" "}
           {venue.publisher}
         </p>
-        <p className="text-pretty leading-snug text-muted-foreground">
+        <p className="leading-snug text-pretty text-muted-foreground">
           {venue.fullName}
         </p>
         <div className="flex flex-wrap gap-1">

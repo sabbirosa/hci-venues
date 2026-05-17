@@ -22,7 +22,7 @@ export function PastDeadlinesViewSkeleton() {
 
         <Skeleton className="h-4 w-32" />
 
-        <div className="divide-y divide-border border-t border-border">
+        <div className="divide-y divide-border">
           {Array.from({ length: 8 }).map((_, i) => (
             <PastDeadlineRowSkeleton key={i} />
           ))}

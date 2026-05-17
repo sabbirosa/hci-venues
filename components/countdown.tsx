@@ -59,13 +59,13 @@ export function Countdown({
   }, [targetDate])
 
   const cellClass = cn(
-    "border-border bg-muted/50 border text-center",
-    compact ? "px-1 py-1" : "px-2 py-2",
+    "border border-border bg-muted/50 text-center",
+    compact ? "px-1 py-1" : "px-2 py-2"
   )
   const gridClass = cn(
-    "grid grid-cols-4",
+    "mt-1 grid grid-cols-4",
     compact ? "gap-1" : "gap-2",
-    className,
+    className
   )
 
   if (timeLeft === null) {
@@ -74,7 +74,7 @@ export function Countdown({
         {units.map((u) => (
           <div key={u.key} className={cellClass}>
             <div className="font-mono text-sm font-medium tabular-nums">—</div>
-            <div className="text-muted-foreground text-xs uppercase tracking-widest">
+            <div className="text-xs tracking-widest text-muted-foreground uppercase">
               {u.label}
             </div>
           </div>
@@ -85,7 +85,7 @@ export function Countdown({
 
   if (timeLeft.done) {
     return (
-      <p className={cn("text-muted-foreground text-sm", className)}>
+      <p className={cn("text-sm text-muted-foreground", className)}>
         Submission deadline has passed
       </p>
     )
@@ -98,7 +98,7 @@ export function Countdown({
           <div className="font-mono text-sm font-medium tabular-nums">
             {String(timeLeft[u.key]).padStart(2, "0")}
           </div>
-          <div className="text-muted-foreground text-xs uppercase tracking-widest">
+          <div className="text-xs tracking-widest text-muted-foreground uppercase">
             {u.label}
           </div>
         </div>
