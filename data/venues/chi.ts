@@ -14,7 +14,7 @@ export const venue: Venue = {
   coreRank: "A*",
   scopusIndexed: true,
   featured: true,
-  website: "https://chi.acm.org/",
+  website: "https://chi.acm.org",
   editions: [
     {
       year: 2026,
@@ -23,10 +23,9 @@ export const venue: Venue = {
       location: "Barcelona, Spain",
       announced: true,
       abstractDeadline: "2025-09-11",
-      website: "https://chi2026.acm.org/",
+      website: "https://chi2026.acm.org",
       programLink: "https://programs.sigchi.org/chi/2026",
-      proceedingsLink:
-        "https://dl.acm.org/doi/proceedings/10.1145/3772318",
+      proceedingsLink: "https://dl.acm.org/doi/proceedings/10.1145/3772318",
     },
     {
       year: 2027,
@@ -35,6 +34,7 @@ export const venue: Venue = {
       location: "Pittsburgh, PA, USA",
       announced: true,
       abstractDeadline: "2026-09-10",
+      website: "https://chi2027.acm.org",
     },
   ],
 }

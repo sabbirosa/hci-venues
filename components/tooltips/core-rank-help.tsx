@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+
 import { CoreRankTooltipContent } from "@/components/tooltips/core-rank-tooltip-content"
 import { HelpTooltip } from "@/components/tooltips/help-tooltip"
 
@@ -12,14 +14,14 @@ export function CoreRankHelp() {
         <CoreRankTooltipContent />
         <p className="text-xs leading-snug text-muted-foreground">
           CORE ranks from{" "}
-          <a
+          <Link
             href={CORE_RANKS_URL}
             className="text-primary hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
             portal.core.edu.au
-          </a>
+          </Link>
           .
         </p>
       </>

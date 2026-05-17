@@ -1,10 +1,15 @@
 "use client"
 
+import Link from "next/link"
+import { RiArrowRightUpLine } from "@remixicon/react"
+
 import { CoreRankBadge } from "@/components/core-rank-badge"
 import { Countdown } from "@/components/countdown"
+import { ExternalLink } from "@/components/external-link"
 import { ScopusBadge } from "@/components/scopus-badge"
 import { cn } from "@/lib/utils"
 import { formatDateRange, formatShortDate } from "@/lib/venues/dates"
+import { getVenueOfficialSiteHref } from "@/lib/venues/edition-links"
 import { getNextEdition } from "@/lib/venues/get-next-edition"
 import type { Venue } from "@/lib/venues/types"
 
@@ -27,8 +32,39 @@ function Tag({
   )
 }
 
+function ConferenceTitle({
+  label,
+  href,
+}: {
+  label: string
+  href?: string
+}) {
+  if (!href) {
+    return <p className="font-medium">{label}</p>
+  }
+
+  return (
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
+    >
+      {label}
+      <RiArrowRightUpLine className="size-4 font-thin" />
+    </Link>
+  )
+}
+
 export function VenueRow({ venue }: { venue: Venue }) {
   const next = getNextEdition(venue)
+  const activeEdition =
+    next.status === "upcoming" ||
+    next.status === "deadline-passed" ||
+    next.status === "deadline-tba"
+      ? next.edition
+      : null
+  const officialSiteHref = getVenueOfficialSiteHref(venue, activeEdition)
 
   return (
     <article className="flex flex-col gap-4 p-4 sm:flex-row sm:gap-6">
@@ -52,15 +88,10 @@ export function VenueRow({ venue }: { venue: Venue }) {
             </Tag>
           ))}
         </div>
-        {venue.website && (
-          <a
-            href={venue.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block text-sm tracking-widest text-primary uppercase hover:underline"
-          >
-            Official site →
-          </a>
+        {officialSiteHref && (
+          <ExternalLink href={officialSiteHref} className="inline-block">
+            Official site
+          </ExternalLink>
         )}
       </div>
 
@@ -97,7 +128,10 @@ export function VenueRow({ venue }: { venue: Venue }) {
               <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                 Conference
               </p>
-              <p className="font-medium">{next.label}</p>
+              <ConferenceTitle
+                label={next.label}
+                href={next.edition.website}
+              />
               {next.edition.location && (
                 <p className="truncate text-sm text-muted-foreground">
                   {next.edition.location}

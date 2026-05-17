@@ -9,9 +9,7 @@ export const venue: Venue = {
   acronym: "OzCHI",
   fullName: "Australian Conference on Human-Computer Interaction",
   publisher: "ACM",
-  categories: [
-    "HCI"
-  ],
+  categories: ["HCI"],
   coreRank: "Regional",
   scopusIndexed: true,
   website: "https://www.ozchi.org/",
@@ -23,7 +21,8 @@ export const venue: Venue = {
       location: "Adelaide, Australia",
       announced: true,
       abstractDeadline: "2026-06-02",
-    }
+      website: "https://www.ozchi.org/2026",
+    },
   ],
   notes: "CORE Australasian B.",
 }

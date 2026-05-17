@@ -1,3 +1,4 @@
+import { ExternalLink } from "@/components/external-link"
 import { cn } from "@/lib/utils"
 import { getEditionLinks } from "@/lib/venues/edition-links"
 import {
@@ -25,9 +26,6 @@ function Tag({
   )
 }
 
-const linkClassName =
-  "text-sm tracking-widest text-primary uppercase hover:underline"
-
 export function PastDeadlineRow({ proceeding }: { proceeding: Proceeding }) {
   const { venue, edition } = proceeding
   const links = getEditionLinks(venue, edition)
@@ -44,15 +42,9 @@ export function PastDeadlineRow({ proceeding }: { proceeding: Proceeding }) {
         {links.length > 0 && (
           <div className="flex flex-wrap gap-x-4 gap-y-1">
             {links.map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linkClassName}
-              >
-                {label} →
-              </a>
+              <ExternalLink key={label} href={href}>
+                {label}
+              </ExternalLink>
             ))}
           </div>
         )}
