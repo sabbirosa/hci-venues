@@ -1,0 +1,36 @@
+import type { Venue } from "@/lib/venues/types"
+
+/**
+ * CHI — update main-track abstractDeadline per edition (YYYY-MM-DD).
+ * Placeholder deadlines marked 2026-12-31 are DUMMY; replace from the official CFP.
+ */
+export const venue: Venue = {
+  id: "chi",
+  acronym: "CHI",
+  fullName: "ACM Conference on Human Factors in Computing Systems",
+  publisher: "ACM",
+  type: "conference",
+  categories: ["HCI"],
+  coreRank: "A*",
+  scopusIndexed: true,
+  featured: true,
+  website: "https://chi.acm.org/",
+  editions: [
+    {
+      year: 2026,
+      startDate: "2026-04-13",
+      endDate: "2026-04-17",
+      location: "Barcelona, Spain",
+      announced: true,
+      abstractDeadline: "2025-09-11",
+    },
+    {
+      year: 2027,
+      startDate: "2027-05-10",
+      endDate: "2027-05-14",
+      location: "Pittsburgh, PA, USA",
+      announced: true,
+      abstractDeadline: "2026-09-10",
+    },
+  ],
+}
