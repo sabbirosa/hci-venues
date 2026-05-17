@@ -1,4 +1,5 @@
 import { colorForCategories, DEADLINE_COLOR } from "@/lib/calendar/category-colors"
+import { isEditionRolling } from "@/lib/venues/get-next-edition"
 import type { ConferenceEdition, Venue, VenueCategory } from "@/lib/venues/types"
 
 export type CalendarMarkerKind =
@@ -43,7 +44,11 @@ export function buildCalendarMarkers(
       const base = `${venue.id}-${edition.editionId ?? edition.year}`
       const label = editionLabel(venue.acronym, edition)
 
-      if (edition.abstractDeadline && yearOf(edition.abstractDeadline) === year) {
+      if (
+        !isEditionRolling(venue, edition) &&
+        edition.abstractDeadline &&
+        yearOf(edition.abstractDeadline) === year
+      ) {
         markers.push({
           id: `${base}-abstract`,
           venueId: venue.id,
@@ -56,7 +61,11 @@ export function buildCalendarMarkers(
         })
       }
 
-      if (edition.paperDeadline && yearOf(edition.paperDeadline) === year) {
+      if (
+        !isEditionRolling(venue, edition) &&
+        edition.paperDeadline &&
+        yearOf(edition.paperDeadline) === year
+      ) {
         markers.push({
           id: `${base}-paper`,
           venueId: venue.id,
@@ -68,6 +77,8 @@ export function buildCalendarMarkers(
           categories: venue.categories,
         })
       }
+
+      if (!edition.startDate) continue
 
       const confEnd = edition.endDate ?? edition.startDate
       if (touchesYear(edition.startDate, confEnd, year)) {
@@ -100,7 +111,7 @@ export function getCalendarYearRange(venues: Venue[]): {
     for (const edition of venue.editions ?? []) {
       const years = [
         edition.year,
-        Number(edition.startDate.slice(0, 4)),
+        edition.startDate ? Number(edition.startDate.slice(0, 4)) : null,
         edition.endDate ? Number(edition.endDate.slice(0, 4)) : null,
         edition.paperDeadline ? Number(edition.paperDeadline.slice(0, 4)) : null,
         edition.abstractDeadline

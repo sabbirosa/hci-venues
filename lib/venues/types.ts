@@ -45,7 +45,8 @@ export type VenueCategory =
 export interface ConferenceEdition {
   year: number
   editionId?: string
-  startDate: string
+  /** Omit until dates are official (common when `announced` is false). */
+  startDate?: string
   endDate?: string
   location?: string
   paperDeadline?: string
@@ -63,6 +64,13 @@ export interface ConferenceEdition {
   pwcLink?: string
   hindex?: number
   announced: boolean
+  /**
+   * Journal-style rolling submissions for this era (e.g. CSCW from 2027 → PACM HCI).
+   * No fixed deadline or countdown for this edition cycle.
+   */
+  rollingSubmissions?: boolean
+  /** Official rolling-submissions / PACM HCI submit page for this era. */
+  rollingSubmissionsUrl?: string
 }
 
 export interface Venue {
@@ -86,6 +94,13 @@ export interface Venue {
   subject?: ConfDatabaseSubject
   editions?: ConferenceEdition[]
   notes?: string
+  /**
+   * All editions use rolling submissions. Prefer per-edition `rollingSubmissions`
+   * when only some years use the journal model.
+   */
+  rollingSubmissions?: boolean
+  /** Official rolling-submissions page when the whole venue uses rolling review. */
+  rollingSubmissionsUrl?: string
 }
 
 export type NextEditionState =
@@ -113,4 +128,15 @@ export type NextEditionState =
       label: string
       previous: ConferenceEdition | null
       message: string
+    }
+  | {
+      status: "rolling-open"
+      label: string
+      edition: ConferenceEdition | null
+      conferenceUpcoming: boolean
+      /** Primary label, e.g. "Rolling submissions". */
+      message: string
+      /** Secondary line, e.g. "Open year-round". */
+      subtitle: string
+      scheduleMessage?: string
     }

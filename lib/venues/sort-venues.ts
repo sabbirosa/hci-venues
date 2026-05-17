@@ -56,14 +56,22 @@ function deadlineSortParts(
 ): { bucket: number; date: string } {
   const next = getNextEdition(venue, now)
   switch (next.status) {
+    case "rolling-open":
+      return { bucket: 0, date: "0000-01-01" }
     case "upcoming":
       return { bucket: 0, date: next.countdownDate }
     case "deadline-passed": {
       const sub = getSubmissionDeadline(next.edition)
-      return { bucket: 1, date: sub?.date ?? next.edition.startDate }
+      return {
+        bucket: 1,
+        date: sub?.date ?? next.edition.startDate ?? `${next.edition.year}-12-31`,
+      }
     }
     case "deadline-tba":
-      return { bucket: 2, date: next.edition.startDate }
+      return {
+        bucket: 2,
+        date: next.edition.startDate ?? `${next.edition.year}-12-31`,
+      }
     case "passed-awaiting":
       return { bucket: 9, date: "9999-12-31" }
   }

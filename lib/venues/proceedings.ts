@@ -1,4 +1,5 @@
 import { parseDay } from "@/lib/venues/dates"
+import { isEditionRolling } from "@/lib/venues/get-next-edition"
 import type { ConferenceEdition, Venue } from "@/lib/venues/types"
 
 export interface Proceeding {
@@ -22,11 +23,12 @@ export function getAllProceedings(venues: Venue[]): Proceeding[] {
   for (const venue of venues) {
     for (const edition of venue.editions ?? []) {
       if (!edition.announced) continue
+      if (isEditionRolling(venue, edition)) continue
       items.push({
         venue,
         edition,
         title: `${venue.fullName} (${venue.acronym}) ${edition.year}`,
-        sortDate: latestDeadlineIso(edition) ?? edition.startDate,
+        sortDate: latestDeadlineIso(edition) ?? edition.startDate ?? `${edition.year}-12-31`,
       })
     }
   }
@@ -45,11 +47,13 @@ export function getPastProceedings(
     const paper = edition.paperDeadline
       ? parseDay(edition.paperDeadline)
       : null
-    const conferenceEnd = parseDay(edition.endDate ?? edition.startDate)
-
     if (abstract && abstract > now) return false
     if (paper && paper > now) return false
-    if (!abstract && !paper) return conferenceEnd <= now
+    if (!abstract && !paper) {
+      if (!edition.startDate) return false
+      const conferenceEnd = parseDay(edition.endDate ?? edition.startDate)
+      return conferenceEnd <= now
+    }
     return true
   })
 }
@@ -59,6 +63,10 @@ export function formatProceedingWhen(edition: ConferenceEdition): string {
     return edition.location
       ? `${edition.dateLabel}. ${edition.location}.`
       : `${edition.dateLabel}.`
+  }
+  if (!edition.startDate) {
+    const yearOnly = String(edition.year)
+    return edition.location ? `${yearOnly}. ${edition.location}.` : yearOnly
   }
   const start = new Intl.DateTimeFormat("en", {
     month: "long",

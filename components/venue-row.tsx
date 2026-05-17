@@ -1,17 +1,19 @@
 "use client"
 
-import Link from "next/link"
 import { RiArrowRightUpLine } from "@remixicon/react"
+import Link from "next/link"
 
 import { CoreRankBadge } from "@/components/core-rank-badge"
 import { Countdown } from "@/components/countdown"
 import { ExternalLink } from "@/components/external-link"
 import { ScopusBadge } from "@/components/scopus-badge"
+import { RollingSubmissionsHelp } from "@/components/tooltips/rolling-submissions-help"
 import { cn } from "@/lib/utils"
 import { formatDateRange, formatShortDate } from "@/lib/venues/dates"
 import { getVenueOfficialSiteHref } from "@/lib/venues/edition-links"
 import {
   getNextEdition,
+  getRollingSubmissionsUrl,
   submissionDeadlineHeading,
 } from "@/lib/venues/get-next-edition"
 import type { Venue } from "@/lib/venues/types"
@@ -35,13 +37,7 @@ function Tag({
   )
 }
 
-function ConferenceTitle({
-  label,
-  href,
-}: {
-  label: string
-  href?: string
-}) {
+function ConferenceTitle({ label, href }: { label: string; href?: string }) {
   if (!href) {
     return <p className="font-medium">{label}</p>
   }
@@ -61,12 +57,15 @@ function ConferenceTitle({
 
 export function VenueRow({ venue }: { venue: Venue }) {
   const next = getNextEdition(venue)
+  const rollingSubmissionsUrl = getRollingSubmissionsUrl(venue)
   const activeEdition =
     next.status === "upcoming" ||
     next.status === "deadline-passed" ||
     next.status === "deadline-tba"
       ? next.edition
-      : null
+      : next.status === "rolling-open" && next.conferenceUpcoming
+        ? next.edition
+        : null
   const officialSiteHref = getVenueOfficialSiteHref(venue, activeEdition)
 
   return (
@@ -99,6 +98,62 @@ export function VenueRow({ venue }: { venue: Venue }) {
       </div>
 
       <div className="w-full shrink-0 space-y-3 sm:w-60">
+        {next.status === "rolling-open" && (
+          <>
+            <div>
+              <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+                Submissions
+              </p>
+              <div className="flex items-center gap-1.5">
+                <p className="font-medium">{next.message}</p>
+                <RollingSubmissionsHelp learnMoreUrl={rollingSubmissionsUrl} />
+              </div>
+              {rollingSubmissionsUrl ? (
+                <ConferenceTitle
+                  label={next.subtitle}
+                  href={rollingSubmissionsUrl}
+                />
+              ) : (
+                <p className="text-sm text-muted-foreground">{next.subtitle}</p>
+              )}
+            </div>
+
+            {next.conferenceUpcoming && next.edition && (
+              <div className="border-t border-border pt-2">
+                <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+                  Conference
+                </p>
+                <ConferenceTitle
+                  label={next.label}
+                  href={next.edition.website}
+                />
+                {next.edition.location && (
+                  <p className="truncate text-sm text-muted-foreground">
+                    {next.edition.location}
+                  </p>
+                )}
+                {next.edition.startDate && (
+                  <p className="text-sm text-muted-foreground">
+                    {formatDateRange(
+                      next.edition.startDate,
+                      next.edition.endDate,
+                    )}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {!next.conferenceUpcoming && next.scheduleMessage && (
+              <div className="border-t border-border pt-2">
+                <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+                  Conference
+                </p>
+                <p className="text-sm leading-snug">{next.scheduleMessage}</p>
+              </div>
+            )}
+          </>
+        )}
+
         {(next.status === "upcoming" ||
           next.status === "deadline-passed" ||
           next.status === "deadline-tba") && (
@@ -128,18 +183,20 @@ export function VenueRow({ venue }: { venue: Venue }) {
               <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                 Conference
               </p>
-              <ConferenceTitle
-                label={next.label}
-                href={next.edition.website}
-              />
+              <ConferenceTitle label={next.label} href={next.edition.website} />
               {next.edition.location && (
                 <p className="truncate text-sm text-muted-foreground">
                   {next.edition.location}
                 </p>
               )}
-              <p className="text-sm text-muted-foreground">
-                {formatDateRange(next.edition.startDate, next.edition.endDate)}
-              </p>
+              {next.edition.startDate && (
+                <p className="text-sm text-muted-foreground">
+                  {formatDateRange(
+                    next.edition.startDate,
+                    next.edition.endDate,
+                  )}
+                </p>
+              )}
             </div>
           </>
         )}
